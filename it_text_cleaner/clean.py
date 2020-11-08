@@ -1,13 +1,19 @@
 import re
+import os
 import unicodedata
 import pandas as pd
 import unidecode
 from nltk import word_tokenize
+from pathlib import Path
 
 class TextCleaner():
     def __init__(self):
-        self.stop_words_list = pd.read_csv('./resources/it-stopwords.csv')['STOPWORDS'].values.tolist()
-        self.it_names = pd.read_csv("./resources/it-names.csv")['NOMI'].values.tolist()
+        this_dir, this_filename = os.path.split(__file__)
+        names_path = os.path.join(this_dir, "resources", "it-names.csv")
+        stopwords_path = os.path.join(this_dir, "resources", "it-stopwords.csv")
+
+        self.stop_words_list = pd.read_csv(stopwords_path)['STOPWORDS'].values.tolist()
+        self.it_names = pd.read_csv(names_path)['NOMI'].values.tolist()
 
     def strip_accents(self, text):
 
